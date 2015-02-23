@@ -1,1 +1,1 @@
-var restarauntRating = angular.module('restarauntRating', []);
+var restaurantRating = angular.module('restaurantRating', []);

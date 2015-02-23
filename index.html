@@ -9,44 +9,87 @@
     <link rel="stylesheet" href="css/bootstrap-paper.css">
   </head>
   <body>
-    <div class="container" ng-controller="RestaurantsCtrl">
-      <div class="row" ng-show="restaurants.length">
+
+
+    <div class="container" ng-controller="restaurantCtrl">
+      <div class="row well" ng-show="restaurants.length">
         <div class="col-md-12">
           <h4>Search Restaurants</h4>
           <form class="form-inline" role="form">
             <div class="form-group">
-              <input ng-model="query" type="text" class="form-control" placeholder="Search">
+              <input ng-model="query.name" type="text" class="form-control" placeholder="Search">
+            </div>
+            <div class="form-group">
+              <select ng-model="query.type" class="form-control">
+                <option></option>
+                <option ng-repeat="item in restaurants" value="{{item.type}}">
+                  {{item.type}}
+                </option>
+              </select>
+            </div>
+            <div class="checkbox" ng-repeat="item in restaurants">
+              <label>
+                <input ng-model="item.selected" type="checkbox" checked>
+                <span >{{item.price}}</span>
+                <br>
+              </label>
             </div>
           </form>
         </div>
       </div>
+
+
+      <!-- <div class="container" ng-controller="restaurantCtrl">
+        <div class="row" ng-show="restaurants.length">
+          <div class="col-md-12">
+            <h4>Search Restaurants</h4>
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                <input ng-model="query.type" type="text" class="form-control" placeholder="Search">
+              </div>
+            </form>
+          </div>
+        </div> -->
+
+
       <div class="row">
         <div class="col-md-12">
           <h2 ng-show="restaurants.length && filtered.length">Restaurant List</h2>
           <h2 ng-show="restaurants.length && !filtered.length">No Matches</h2>
           <ul>
-            <li ng-repeat="item in filtered = (restaurants | filter:query)">
+            <li ng-repeat="item in filtered = (restaurants | filter:query| filter:{selected:true})">
               <span ng-click="editing = true" ng-hide="editing">
                 {{item.name}} <a ng-click="deleteRestaurant(item)">Delete</a>
               </span>
               <span class="form-group" ng-show="editing" ng-submit="editing = false">
                 <form class="form-inline" role="form">
                   <input type="text" class="form-control input-sm" ng-model="item.name" placeholder="Name" required />
+                  <input type="text" class="form-control input-sm" ng-model="item.type" placeholder="Food Type" required />
+                  <input type="text" class="form-control input-sm" ng-model="item.price" placeholder="Price Range" required />
                   <button class="btn btn-default btn-sm" type="submit">Save</button>
                 </form>
               </span>
             </li>
           </ul>
         </div>
+
+
         <div class="col-md-4">
           <h2>New Restaurant</h2>
           <form ng-submit="addRestaurant()" class="form-inline" role="form">
             <div class="form-group">
               <input type="text" ng-model="restaurantName" class="form-control" placeholder="Enter name">
             </div>
+            <div class="form-group">
+              <input type="text" ng-model="restaurantType" class="form-control" placeholder="Enter food type">
+            </div>
+            <div class="form-group">
+              <input type="text" ng-model="restaurantPrice" class="form-control" placeholder="Enter price range">
+            </div>
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
         </div>
+
       </div>
     </div>
   </body>
