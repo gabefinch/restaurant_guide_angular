@@ -17,6 +17,3 @@ restaurantRating.controller('restaurantCtrl', function restaurantCtrl($scope) {
     $scope.restaurants.splice(index, 1);
   };
 });
-restarauntRating.filter('queryName', function() {
-
-});

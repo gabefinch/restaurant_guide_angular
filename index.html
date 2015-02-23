@@ -27,13 +27,13 @@
                 </option>
               </select>
             </div>
-            <div class="checkbox" ng-repeat="item in restaurants">
-              <label>
-                <input ng-model="item.selected" type="checkbox" checked>
-                <span >{{item.price}}</span>
-                <br>
-              </label>
-            </div>
+            <select ng-model="query.price" class="form-control">
+              <option value=""></option>
+              <option value="$">$</option>
+              <option value="$$">$$</option>
+              <option value="$$$">$$$</option>
+              <option value="$$$$">$$$$</option>
+            </select>
           </form>
         </div>
       </div>
@@ -57,7 +57,8 @@
           <h2 ng-show="restaurants.length && filtered.length">Restaurant List</h2>
           <h2 ng-show="restaurants.length && !filtered.length">No Matches</h2>
           <ul>
-            <li ng-repeat="item in filtered = (restaurants | filter:query| filter:{selected:true})">
+
+            <li ng-repeat="item in filtered = (restaurants | filter:query)">
               <span ng-click="editing = true" ng-hide="editing">
                 {{item.name}} <a ng-click="deleteRestaurant(item)">Delete</a>
               </span>
