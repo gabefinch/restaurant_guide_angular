@@ -6,6 +6,8 @@ restaurantRating.controller('restaurantCtrl', function restaurantCtrl($scope) {
     { name: "Great Wall", type: "Chinese", price: "$" },
     { name: "Hong Kong", type: "Chinese", price: "$$" }
   ];
+
+
   $scope.addRestaurant = function() {
     $scope.restaurants.push({name: $scope.restaurantName, type: $scope.restaurantType, price: $scope.restaurantPrice })
     $scope.restaurantName = null;
@@ -15,5 +17,17 @@ restaurantRating.controller('restaurantCtrl', function restaurantCtrl($scope) {
   $scope.deleteRestaurant = function(restaurant) {
     var index = $scope.restaurants.indexOf(restaurant);
     $scope.restaurants.splice(index, 1);
+  };
+});
+
+restaurantRating.filter('uniqueTypes', function() {
+  return function(input) {
+    var types = [];
+    input.forEach( function(restaurant) {
+      if (types.indexOf(restaurant.type) === -1) {
+        types.push(restaurant.type);
+      }
+    });
+    return types;
   };
 });
