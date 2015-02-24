@@ -22,18 +22,30 @@
             <div class="form-group">
               <select ng-model="query.type" class="form-control">
                 <option></option>
-                <option ng-repeat="item in filtered = (restaurants | uniqueTypes)" value="{{item}}">
+                <option ng-repeat="item in (restaurants | uniqueTypes)" value="{{item}}">
                   {{item}}
                 </option>
               </select>
             </div>
-            <select ng-model="query.price" class="form-control">
-              <option value=""></option>
-              <option value="$">$</option>
-              <option value="$$">$$</option>
-              <option value="$$$">$$$</option>
-              <option value="$$$$">$$$$</option>
-            </select>
+            <div class="form-group">
+              <div class="col-lg-10">
+                <div ng-model="search.price" class="checkbox">
+                  <label>
+                    <input type="checkbox" value="$">$
+                  </label>
+                  <label>
+                    <input type="checkbox" value="$$">$$
+                  </label>
+                  <label>
+                    <input type="checkbox" value="$$$">$$$
+                  </label>
+                  <label>
+                    <input type="checkbox" value="$$$$">$$$$
+                  </label>
+                </div>
+              </div>
+            </div>
+
           </form>
         </div>
       </div>
@@ -44,7 +56,7 @@
           <h2 ng-show="restaurants.length && !filtered.length">No Matches</h2>
           <ul>
 
-            <li ng-repeat="item in filtered = (restaurants | filter:query)">
+            <li ng-repeat="item in restaurants | filter:query | filter:search.price:selected">
               <span ng-click="editing = true" ng-hide="editing">
                 {{item.name}} <a ng-click="deleteRestaurant(item)">Delete</a>
               </span>
@@ -66,22 +78,43 @@
       <div class="row">
         <div class="col-md-4">
           <h2>New Restaurant</h2>
-          <form ng-submit="addRestaurant()" class="form-inline" role="form">
+          <form ng-submit="addRestaurant()" role="form">
             <div class="form-group">
               <input type="text" ng-model="restaurantName" class="form-control" placeholder="Enter name">
             </div>
             <div class="form-group">
               <input type="text" ng-model="restaurantType" class="form-control" placeholder="Enter food type">
             </div>
+
             <div class="form-group">
-              <input type="text" ng-model="restaurantPrice" class="form-control" placeholder="Enter price range">
+              <div class="col-lg-10">
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="restaurantPrice" name="price" value="$">$
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="restaurantPrice" name="price" value="$$">$$
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="restaurantPrice" name="price" value="$$$">$$$
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="restaurantPrice" name="price" value="$$$$">$$$$
+                  </label>
+                </div>
+              </div>
             </div>
+
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
         </div>
       </div>
-
-
 
 
     </div>
